@@ -15,7 +15,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data = DB::select('select * from mailbox', [1]);
+        // $data = DB::select('select * from mailbox', [1]);
+        $data = DB::select('select * from mailbox');
         dd($data);
     }
 
