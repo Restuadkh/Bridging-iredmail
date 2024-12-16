@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Forwarding;
+use App\Models\Vmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +18,24 @@ class UsersController extends Controller
     public function index()
     {
         // $data = DB::select('select * from mailbox', [1]);
-        $data = DB::select('select * from mailbox');
-        dd($data);
+        // $data = DB::select('select * from forwardings');
+        // $data = Forwarding::get();
+        // return response()->json($data);
+        // dd($data);
+    }
+
+    public function GET(Request $request)
+    {
+        if (!$request->isJson()) {
+            return response()->json(['error' => 'Requests must be in JSON format.'], 400);
+        }
+        $token = $request->token;
+        if (!$token == env('APP_KEY')) {
+            return response()->json(['error' => 'Requests api Invalid.'], 400);
+        }
+
+        $data = Vmail::get();
+        return response()->json($data);
     }
 
     /**
@@ -115,14 +133,17 @@ class UsersController extends Controller
         } else {
             $maildir = sprintf("%s/%s-%s/", $domain, $username, $DATE);
         }
-
-        $hashedPassword = $this->generatePasswordHash('BCRYPT', $password);
-        
-        if ($hashedPassword) {
-            return response()->json($hashedPassword, 200);
-        } else {
-            return response()->json($hashedPassword, 400);
+        try {
+            $hashedPassword = $this->generatePasswordHash('BCRYPT', $password);
+        } catch (\Exception $e) {
+            $hashedPassword = $password;
         }
+
+        // if ($hashedPassword) {
+        //     return response()->json($hashedPassword, 200);
+        // } else {
+        //     return response()->json($hashedPassword, 400);
+        // }
         $data_create = [
             "username" => $username . '@' . $domain,
             "password" => $hashedPassword,
@@ -145,6 +166,16 @@ class UsersController extends Controller
 
         ];
 
+        try {
+            $user = Forwarding::create($data_forwarding);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'User already exists', 'message' => $e], 400);
+        }
+        try {
+            $user = Vmail::create($data_create);
+        } catch (\Exception) {
+            return response()->json(['error' => 'User already exists', 'message' => $e], 400);
+        }
         return response()->json([$data_create, $data_forwarding], 200);
     }
 
@@ -188,6 +219,26 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function DELETE(Request $request)
+    {
+        if (!$request->isJson()) {
+            return response()->json(['error' => 'Requests must be in JSON format.'], 400);
+        }
+        $token = $request->token;
+        if (!$token == env('APP_KEY')) {
+            return response()->json(['error' => 'Requests api Invalid.'], 400);
+        }
+        $data = Vmail::where('username', $request->username)->first();
+        try {
+            // $data->delete();
+            Vmail::where('username', $request->username)->delete();
+            return response()->json(['message' => 'success', 'data' => $data]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e, 'data' => $data], 400);
+        }
+    }
+
     public function destroy($id)
     {
         //
