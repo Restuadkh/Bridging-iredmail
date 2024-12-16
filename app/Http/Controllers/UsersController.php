@@ -16,28 +16,12 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $password = '123456789';
-        $data = $this->generatePasswordHash('BLF-CRYPT', $password);
-        // Use doveadm to hash the password (requires dovecot installed and accessible)
-        $command = sprintf('doveadm pw -s %s -p %s', escapeshellarg('BCRYPT'), escapeshellarg($password));
-
-        $output = [];
-        $returnVar = null;
-
-        // Execute shell command
-        exec($command, $output, $returnVar);
-
-        // Check for errors
-        if ($returnVar !== 0 || empty($output)) {
-            return false;
-        }
-
+    { 
         // $data = DB::select('select * from mailbox', [1]);
 
         // $data = DB::select('select * from forwardings');
         // $data = Forwarding::get();
-        return response()->json([$data, $output]);
+        // return response()->json($data);
         // dd($data);
     }
 
@@ -151,7 +135,7 @@ class UsersController extends Controller
             $maildir = sprintf("%s/%s-%s/", $domain, $username, $DATE);
         }
         try {
-            $hashedPassword = $this->generatePasswordHash('BCRYPT', $password);
+            $hashedPassword = $this->generatePasswordHash($PASSWORD_SCHEME, $password);
         } catch (\Exception $e) {
             $hashedPassword = $password;
         }
