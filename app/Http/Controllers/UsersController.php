@@ -16,7 +16,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
         // $data = DB::select('select * from mailbox', [1]);
 
         // $data = DB::select('select * from forwardings');
