@@ -17,7 +17,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $this->generatePasswordHash('SSHA512', 'test');
+
 
         // $data = DB::select('select * from mailbox', [1]);
 
@@ -67,10 +67,9 @@ class UsersController extends Controller
         }
 
         // Perintah doveadm
-        $command = "sudo doveadm pw -s $scheme -p $password"; 
+        $command = "sudo doveadm pw -s $scheme -p $password";
         // Execute shell command
         $output = shell_exec($command);
-        echo $output;
 
         // Return the hashed password
         return $output;
@@ -132,6 +131,7 @@ class UsersController extends Controller
             $hashedPassword = $this->generatePasswordHash($PASSWORD_SCHEME, $password);
         } catch (\Exception $e) {
             $hashedPassword = $password;
+            return response()->json(['error' => 'hashedPassword fail', 'message' => $e], 400);
         }
 
         // if ($hashedPassword) {
