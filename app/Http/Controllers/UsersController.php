@@ -17,6 +17,8 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $this->generatePasswordHash('SSHA512', 'test');
+
         // $data = DB::select('select * from mailbox', [1]);
 
         // $data = DB::select('select * from forwardings');
@@ -64,12 +66,8 @@ class UsersController extends Controller
             $scheme = 'BLF-CRYPT';
         }
 
-        // Use doveadm to hash the password (requires dovecot installed and accessible)
-        $command = sprintf('doveadm pw -s %s -p %s', escapeshellarg($scheme), escapeshellarg($password));
-
-        $output = [];
-        $returnVar = null;
-
+        // Perintah doveadm
+        $command = "sudo doveadm pw -s $scheme -p $password";
         // Execute shell command
         exec($command, $output, $returnVar);
 
