@@ -67,10 +67,7 @@ class UsersController extends Controller
         }
 
         // Perintah doveadm
-        $command = "sudo doveadm pw -s $scheme -p $password";
-
-        // Perintah doveadm
-        $command = "sudo doveadm pw -s $scheme -p $password";
+        $command = "sudo doveadm pw -s $scheme -p $password"; 
         // Execute shell command
         $output = shell_exec($command);
         echo $output;
