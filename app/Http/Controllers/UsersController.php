@@ -139,6 +139,7 @@ class UsersController extends Controller
         // } else {
         //     return response()->json($hashedPassword, 400);
         // }
+        $username = strtolower($username);
         $data_create = [
             "username" => $username . '@' . $domain,
             "password" => $hashedPassword,

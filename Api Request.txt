@@ -1,0 +1,161 @@
+## request
+curl --location --request GET 'https://bmail.rsudps.com/api/users' \
+--header 'Content-Type: application/json' \
+--data '{
+    "token": "base64:D0dqTkg5rZBla0Xijo1sulk6hGPs3M0EZQOXFsfehKE="
+}'
+
+## Response
+{
+        "username": "failure@rsudps.com",
+        "password": "{SSHA512}OceUeoH35G7VNMcM4+4D2mQmAFxMtHseK70QH43FcMUCSyX0FNK9x13RqGLTmrDaMZc3LGbaeihieyL6JpB1gT3AxElvvx+v",
+        "name": "failureRecord",
+        "language": "en_US",
+        "mailboxformat": "maildir",
+        "mailboxfolder": "Maildir",
+        "storagebasedirectory": "/var/vmail",
+        "storagenode": "vmail1",
+        "maildir": "rsudps.com/f/a/i/failure-2024.12.09.02.01.01/",
+        "quota": 1024,
+        "domain": "rsudps.com",
+        "transport": "",
+        "department": "",
+        "rank": "normal",
+        "employeeid": "",
+        "isadmin": 0,
+        "isglobaladmin": 0,
+        "enablesmtp": 1,
+        "enablesmtpsecured": 1,
+        "enablepop3": 1,
+        "enablepop3secured": 1,
+        "enablepop3tls": 1,
+        "enableimap": 1,
+        "enableimapsecured": 1,
+        "enableimaptls": 1,
+        "enabledeliver": 1,
+        "enablelda": 1,
+        "enablemanagesieve": 1,
+        "enablemanagesievesecured": 1,
+        "enablesieve": 1,
+        "enablesievesecured": 1,
+        "enablesievetls": 1,
+        "enableinternal": 1,
+        "enabledoveadm": 1,
+        "enablelib-storage": 1,
+        "enablequota-status": 1,
+        "enableindexer-worker": 1,
+        "enablelmtp": 1,
+        "enabledsync": 1,
+        "enablesogo": 1,
+        "enablesogowebmail": "y",
+        "enablesogocalendar": "y",
+        "enablesogoactivesync": "y",
+        "allow_nets": null,
+        "disclaimer": null,
+        "settings": null,
+        "passwordlastchange": "2024-12-09 02:01:01",
+        "created": "2024-12-09 02:01:01",
+        "modified": "1970-01-01 01:01:01",
+        "expired": "9999-12-31 00:00:00",
+        "active": 1
+    },
+]
+
+## request
+curl --location 'https://bmail.rsudps.com/api/create-users' \
+--header 'Content-Type: application/json' \
+--data '{
+    "token": "base64:D0dqTkg5rZBla0Xijo1sulk6hGPs3M0EZQOXFsfehKE=",
+    "username": "testbanget1",
+    "password": "11a1A111.",
+    "password_confirmation": "11a1A111."
+}'
+
+## Response
+[
+    {
+        "username": "testbanget1@rsudps.com",
+        "password": "{SSHA512}NoPrUhlp7moKFUi2qV74Xy47yr0XEfsp1h/BxStQKiZ5MzaQ/Uj74DKQNyJkHhcuu9jBhvN107ItwTQ8/p/MN85Cv9k=\n",
+        "storagebasedirectory": "/var/vmail/",
+        "storagenode": "vmail1",
+        "maildir": "rsudps.com/t/e/s/testbanget1-2024.12.17.01.18.39/",
+        "quota": "1024",
+        "domain": "rsudps.com",
+        "active": "1",
+        "passwordlastchange": "2024-12-17T01:18:39.685298Z",
+        "created": "2024-12-17T01:18:39.685318Z"
+    },
+    {
+        "address": "testbanget1@rsudps.com",
+        "forwarding": "testbanget1@rsudps.com",
+        "domain": "rsudps.com",
+        "dest_domain": "rsudps.com",
+        "is_forwarding": "1"
+    }
+]
+
+## Request
+curl --location 'https://bmail.rsudps.com/api/remove-users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "token": "base64:D0dqTkg5rZBla0Xijo1sulk6hGPs3M0EZQOXFsfehKE=",
+    "username": "testbanget1@rsudps.com"
+}'
+
+## Response 
+{
+    "message": "success",
+    "data": {
+        "username": "testbanget1@rsudps.com",
+        "password": "{SSHA512}NoPrUhlp7moKFUi2qV74Xy47yr0XEfsp1h/BxStQKiZ5MzaQ/Uj74DKQNyJkHhcuu9jBhvN107ItwTQ8/p/MN85Cv9k=\n",
+        "name": "",
+        "language": "",
+        "mailboxformat": "maildir",
+        "mailboxfolder": "Maildir",
+        "storagebasedirectory": "/var/vmail/",
+        "storagenode": "vmail1",
+        "maildir": "rsudps.com/t/e/s/testbanget1-2024.12.17.01.18.39/",
+        "quota": 1024,
+        "domain": "rsudps.com",
+        "transport": "",
+        "department": "",
+        "rank": "normal",
+        "employeeid": "",
+        "isadmin": 0,
+        "isglobaladmin": 0,
+        "enablesmtp": 1,
+        "enablesmtpsecured": 1,
+        "enablepop3": 1,
+        "enablepop3secured": 1,
+        "enablepop3tls": 1,
+        "enableimap": 1,
+        "enableimapsecured": 1,
+        "enableimaptls": 1,
+        "enabledeliver": 1,
+        "enablelda": 1,
+        "enablemanagesieve": 1,
+        "enablemanagesievesecured": 1,
+        "enablesieve": 1,
+        "enablesievesecured": 1,
+        "enablesievetls": 1,
+        "enableinternal": 1,
+        "enabledoveadm": 1,
+        "enablelib-storage": 1,
+        "enablequota-status": 1,
+        "enableindexer-worker": 1,
+        "enablelmtp": 1,
+        "enabledsync": 1,
+        "enablesogo": 1,
+        "enablesogowebmail": "y",
+        "enablesogocalendar": "y",
+        "enablesogoactivesync": "y",
+        "allow_nets": null,
+        "disclaimer": null,
+        "settings": null,
+        "passwordlastchange": "2024-12-17 01:18:39",
+        "created": "2024-12-17 01:18:39",
+        "modified": "1970-01-01 01:01:01",
+        "expired": "9999-12-31 00:00:00",
+        "active": 1
+    }
+}
