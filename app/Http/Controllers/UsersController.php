@@ -169,7 +169,7 @@ class UsersController extends Controller
         }
         try {
             $user = Vmail::create($data_create);
-        } catch (\Exception) {
+        } catch (\Exception  $e) {
             return response()->json(['error' => 'User already exists', 'message' => $e], 400);
         }
         return response()->json([$data_create, $data_forwarding], 200);
@@ -225,13 +225,18 @@ class UsersController extends Controller
         if (!$token == env('APP_KEY')) {
             return response()->json(['error' => 'Requests api Invalid.'], 400);
         }
-        $data = Vmail::where('username', $request->username)->first();
+        $username = strtolower($request->username);
+
+        $Vmail = Vmail::where('username', $username)->first();
+        $Forwarding = Forwarding::where('address', $username)->first();
+
         try {
             // $data->delete();
-            Vmail::where('username', $request->username)->delete();
-            return response()->json(['message' => 'success', 'data' => $data]);
+            Vmail::where('username', $username)->delete();
+            Forwarding::where('address', $username)->delete();
+            return response()->json(['message' => 'success', 'Vmail' => $Vmail,'Forwarding' => $Forwarding]);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e, 'data' => $data], 400);
+            return response()->json(['message' => $e, 'Vmail' => $Vmail, 'Forwarding' => $Forwarding], 400);
         }
     }
 
